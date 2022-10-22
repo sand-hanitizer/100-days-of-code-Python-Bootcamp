@@ -20,7 +20,7 @@ scoreboard = Scoreboard()
 
 game_is_on = True
 count = 1
-NUM = 6
+NUM = 8
 sleep = 0.1
 
 while game_is_on:
