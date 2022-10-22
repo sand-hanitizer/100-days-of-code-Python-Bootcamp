@@ -5,6 +5,10 @@ from car_manager import CarManager
 from scoreboard import Scoreboard
 
 TOP_EDGE = 270
+game_is_on = True
+count = 1
+NUM = 8
+sleep = 0.1
 
 screen = Screen()
 screen.setup(width=600, height=600)
@@ -17,11 +21,6 @@ screen.onkey(fun=turtle.move_up, key="Up")
 manager = CarManager()
 
 scoreboard = Scoreboard()
-
-game_is_on = True
-count = 1
-NUM = 8
-sleep = 0.1
 
 while game_is_on:
     time.sleep(sleep)
