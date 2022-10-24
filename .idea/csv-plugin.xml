@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Day 25 - US States Name Game\Game\states_missed.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Day 25 - US States Name Game\Squirrel Census\ColorData.csv">
           <value>
             <Attribute>
