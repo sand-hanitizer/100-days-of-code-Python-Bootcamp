@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\Day 25 - US States Name Game\Game\50_states.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Day 25 - US States Name Game\Squirrel Census\ColorData.csv">
           <value>
             <Attribute>
