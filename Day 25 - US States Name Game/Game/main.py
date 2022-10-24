@@ -11,22 +11,24 @@ turtle.shape("blank_states_img.gif")
 states_data = pd.DataFrame(pd.read_csv("50_states.csv"))
 states_name = states_data["state"].tolist()
 game_is_on = True
-
+guessed_states = []
 
 while game_is_on:
-    answer = str(screen.textinput(title="Guess the State", prompt="What's the state's name?"))
+    answer = str(screen.textinput(title=f"Guess the State,{len(guessed_states)}/50", prompt="What's the state's name?"))
     answer = string.capwords(answer)
 
-    if answer == "End":
+    if answer == "End" or len(guessed_states) == 50:
         game_is_on = False
-
+        screen.exitonclick()
+    
     text = turtle.Turtle()
     for x in states_name:
         if answer == x:
             row = states_data[states_data["state"] == answer]
+            if answer not in guessed_states:
+                guessed_states.append(answer)
             print(row)
             location = (int(row['x']), int(row['y']))
-            print(location)
             text.hideturtle()
             text.penup()
             text.goto(location)
