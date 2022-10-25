@@ -17,10 +17,7 @@ while len(guessed_states) < 50:
     answer = string.capwords(answer)
 
     if answer == "End":
-        missing = []
-        for x in states_name:
-            if x not in guessed_states:
-                missing.append(x)
+        missing = [x for x in states_name if x not in guessed_states]
         data = pd.DataFrame(missing)
         data.to_csv("states_missed.csv")
         break
