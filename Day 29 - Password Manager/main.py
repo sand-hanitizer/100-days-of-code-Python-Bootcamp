@@ -1,5 +1,5 @@
-import tkinter
 from tkinter import *
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -8,10 +8,12 @@ def save():
     website = website_entry.get()
     user = username_entry.get()
     password = password_entry.get()
-    with open("data.txt","a") as file:
-        file.write(f"{website} | {user} | {password}")
 
-
+    with open("data.txt", "a") as file:
+        file.write(f"{website} | {user} | {password} \n")
+        website_entry.delete(0, END)
+        username_entry.delete(0, END)
+        password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -28,7 +30,7 @@ canvas.create_image(100, 100, image=img)
 canvas.grid(row=0, column=1)
 
 # website entry
-website_label = Label(text="Website",bg="white")
+website_label = Label(text="Website", bg="white")
 website_label.grid(row=1, column=0)
 website_entry = Entry(width=38)
 website_entry.grid(row=1, column=1, columnspan=2, sticky="EW")
@@ -39,7 +41,7 @@ username_label = Label(text="Email/Username", bg="white")
 username_label.grid(row=2, column=0)
 username_entry = Entry(width=38)
 username_entry.grid(row=2, column=1, columnspan=2, sticky="EW")
-username_entry.insert(0,"ananya@email.com")
+username_entry.insert(0, "ananya@email.com")
 
 # password
 password_label = Label(text="Password", bg="white")
