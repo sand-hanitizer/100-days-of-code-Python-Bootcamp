@@ -2,8 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import randint, choice, shuffle
 
-import pyperclip
-from pyperclip import copy, paste
+from pyperclip import copy
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
            'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
@@ -26,7 +25,7 @@ def generate_password():
 
     password = "".join(password_list)
     password_entry.insert(0, f"{password}")
-    pyperclip.copy(password)
+    copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
