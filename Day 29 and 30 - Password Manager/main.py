@@ -31,7 +31,6 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
-
     website = website_entry.get()
     user = username_entry.get()
     pass_word = password_entry.get()
@@ -45,10 +44,19 @@ def save():
     if len(website) == 0 or len(pass_word) == 0:
         messagebox.showwarning(title="Warning", message="Do not leave the fields empty.")
     else:
+        with open("data.json", "r") as file:
+            # Read old data
+            data = json.load(file)
+            # Update old data with new data
+            data.update(new_data)
+
         with open("data.json", "w") as file:
-            json.dump(new_data, file, indent=4)
+            # Put all that back in data file
+            json.dump(data, file, indent=4)
+
             website_entry.delete(0, END)
             password_entry.delete(0, END)
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
