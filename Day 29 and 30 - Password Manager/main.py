@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 from random import randint, choice, shuffle
@@ -30,25 +31,27 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
-    is_ok = False
+
     website = website_entry.get()
     user = username_entry.get()
     pass_word = password_entry.get()
+    new_data = {
+        website: {
+            "username": user,
+            "password": pass_word
+        }
+    }
+
     if len(website) == 0 or len(pass_word) == 0:
         messagebox.showwarning(title="Warning", message="Do not leave the fields empty.")
     else:
-        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered"
-                                                              f"\nEmail : {user}"
-                                                              f"\nPassword : {pass_word}"
-                                                              f"\nSave?")
-    if is_ok:
-        with open("data.txt", "a") as file:
-            file.write(f"{website} | {user} | {pass_word} \n")
+        with open("data.json", "w") as file:
+            json.dump(new_data, file, indent=4)
             website_entry.delete(0, END)
             password_entry.delete(0, END)
 
-
 # ---------------------------- UI SETUP ------------------------------- #
+
 
 # display
 window = Tk()
