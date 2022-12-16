@@ -1,9 +1,9 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 from random import randint, choice, shuffle
 
-import pyperclip
-from pyperclip import copy, paste
+from pyperclip import copy
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
            'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
@@ -26,30 +26,66 @@ def generate_password():
 
     password = "".join(password_list)
     password_entry.insert(0, f"{password}")
-    pyperclip.copy(password)
+    copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
-    is_ok = False
     website = website_entry.get()
     user = username_entry.get()
     pass_word = password_entry.get()
+    new_data = {
+        website: {
+            "username": user,
+            "password": pass_word
+        }
+    }
+
     if len(website) == 0 or len(pass_word) == 0:
         messagebox.showwarning(title="Warning", message="Do not leave the fields empty.")
     else:
-        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered"
-                                                              f"\nEmail : {user}"
-                                                              f"\nPassword : {pass_word}"
-                                                              f"\nSave?")
-    if is_ok:
-        with open("data.txt", "a") as file:
-            file.write(f"{website} | {user} | {pass_word} \n")
+        try:
+            with open("data.json", "r") as file:
+                # Read old data
+                data = json.load(file)
+
+        except FileNotFoundError:
+            with open("data.json", "w") as file:
+                json.dump(new_data, file, indent=4)
+        else:
+            # Update old data with new data
+            data.update(new_data)
+
+            with open("data.json", "w") as file:
+                # Put all that back in data file
+                json.dump(data, file, indent=4)
+
+        finally:
             website_entry.delete(0, END)
             password_entry.delete(0, END)
 
 
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = website_entry.get()
+    try:
+        with open("data.json") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error",message="No file found.")
+    else:
+        if website in data:
+            email = data[website]["username"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Username={email} \n"
+                                                       f"Password={password}")
+        else:
+            messagebox.showwarning(title="No Website",
+                                   message="This website does not exist in database.")
+
+
 # ---------------------------- UI SETUP ------------------------------- #
+
 
 # display
 window = Tk()
@@ -66,7 +102,7 @@ canvas.grid(row=0, column=1)
 website_label = Label(text="Website", bg="white")
 website_label.grid(row=1, column=0)
 website_entry = Entry(width=38)
-website_entry.grid(row=1, column=1, columnspan=2, sticky="EW")
+website_entry.grid(row=1, column=1, sticky="EW")
 website_entry.focus()
 
 # username entry
@@ -88,6 +124,10 @@ gen_pass.grid(row=3, column=2, sticky="EW")
 # add button
 add = Button(text="Add", width=39, highlightthickness=0, bg="white", fg="#024B30", command=save)
 add.grid(row=4, column=1, columnspan=2, sticky="EW")
+
+# search button
+search_button = Button(text="Search", highlightthickness=0, bg="white", fg="#024B30", command=find_password)
+search_button.grid(row=1, column=2, sticky="EW")
 
 # keep screen on
 window.mainloop()
