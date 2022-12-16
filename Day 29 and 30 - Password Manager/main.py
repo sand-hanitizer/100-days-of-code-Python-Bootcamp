@@ -65,6 +65,18 @@ def save():
             password_entry.delete(0, END)
 
 
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = website_entry.get()
+    with open("data.json") as file:
+        data = json.load(file)
+        if website in data:
+            email = data[website]["username"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Username={email} \n"
+                                                       f"Password={password}")
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 
@@ -83,7 +95,7 @@ canvas.grid(row=0, column=1)
 website_label = Label(text="Website", bg="white")
 website_label.grid(row=1, column=0)
 website_entry = Entry(width=38)
-website_entry.grid(row=1, column=1, columnspan=2, sticky="EW")
+website_entry.grid(row=1, column=1, sticky="EW")
 website_entry.focus()
 
 # username entry
@@ -105,6 +117,10 @@ gen_pass.grid(row=3, column=2, sticky="EW")
 # add button
 add = Button(text="Add", width=39, highlightthickness=0, bg="white", fg="#024B30", command=save)
 add.grid(row=4, column=1, columnspan=2, sticky="EW")
+
+# search button
+search_button = Button(text="Search", highlightthickness=0, bg="white", fg="#024B30", command=find_password)
+search_button.grid(row=1, column=2, sticky="EW")
 
 # keep screen on
 window.mainloop()
