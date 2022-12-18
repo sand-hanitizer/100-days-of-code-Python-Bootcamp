@@ -1,5 +1,7 @@
 from tkinter import *
 
+word = "WORD"
+meaning = "MEANING"
 BACKGROUND_COLOR = "#B1DDC6"
 
 
@@ -16,8 +18,10 @@ wrong = PhotoImage(file="images/wrong.png")
 
 # Canvas
 display_front = Canvas(height=526, width=800, highlightthickness=0, bg=BACKGROUND_COLOR)
-display_front.create_image(400, 266, image=flashcard_front)
+display_front.create_image(400, 263, image=flashcard_front)
 display_front.grid(row=0, column=0, columnspan=2)
+display_front.create_text(400,150,font="Arial 40 italic",text=f"{word}")
+display_front.create_text(400,263,font="Arial 60 bold",text=f"{meaning}")
 
 # Buttons
 correct = Button(image=right, highlightthickness=0, bg=BACKGROUND_COLOR)
